@@ -15,4 +15,9 @@ class TraderItem extends Model
     {
         return $this->belongsTo(Item::class);
     }
+
+    public function trader()
+    {
+        return $this->belongsTo(Trader::class);
+    }
 }

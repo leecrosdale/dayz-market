@@ -24,6 +24,7 @@
                                 <th>File</th>
                                 <th>Initial Stock Percentage</th>
                                 <th>Name</th>
+                                <th>Traders</th>
                                 <th>Min Price</th>
                                 <th>Max Price</th>
                                 <th>Sell Price Percent</th>
@@ -40,6 +41,7 @@
                                     <td>{{ $item->item_type->filename }}</td>
                                     <td>{{ $item->item_type->init_stock_percent }}</td>
                                     <td>{{ $item->class_name }}</td>
+                                    <td>{{ $item->trader_items()->count() }}</td>
                                     <td>{{ $item->min_price_threshold }}</td>
                                     <td>{{ $item->max_price_threshold }}</td>
                                     <td>{{ $item->sell_price_percent }}</td>
@@ -47,7 +49,7 @@
                                     <td>{{ $item->max_stock_threshold }}</td>
                                     <td>{{ count($item->spawn_attachments) ?? 0 }}</td>
                                     <td>{{ count($item->variants) ?? 0 }}</td>
-                                    <td><a href="#">View</a></td>
+                                    <td><a href="{{ route('admin.items.show', $item) }}">View</a></td>
                                 </tr>
                             @endforeach
                             </tbody>

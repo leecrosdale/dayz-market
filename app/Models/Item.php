@@ -16,6 +16,11 @@ class Item extends Model
         'variants' => 'object'
     ];
 
+    public function trader_items()
+    {
+        return $this->hasMany(TraderItem::class);
+    }
+
     public function item_type()
     {
         return $this->belongsTo(ItemType::class);
