@@ -26,7 +26,12 @@ Route::middleware('auth:web')->group(function() {
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::resource('items', \App\Http\Controllers\Admin\ItemController::class);
         Route::resource('traders', \App\Http\Controllers\Admin\TraderController::class);
-        Route::get('traders/{trader}/items', [\App\Http\Controllers\TraderController::class, 'items'])->name('trader.items');
-        Route::resource('trader-items', \App\Http\Controllers\TraderItemController::class);
+        Route::get('traders/{trader}/items', [\App\Http\Controllers\Admin\TraderController::class, 'items'])->name('traders.items.index');
+        Route::get('traders/{trader}/items/missing', [\App\Http\Controllers\Admin\TraderController::class, 'missingItems'])->name('traders.items.missing.index');
+        Route::get('traders/{trader}/items/remove/{item}', [\App\Http\Controllers\Admin\TraderController::class, 'removeItem'])->name('traders.items.remove');
+        Route::get('traders/{trader}/items/missing/convert/{missing}', [\App\Http\Controllers\Admin\TraderController::class, 'showMissingItemCreate'])->name('traders.items.missing.convert');
+        Route::post('items/{trader}', [\App\Http\Controllers\Admin\ItemController::class, 'storeWithTrader'])->name('items.store.trader');
+
+        Route::resource('trader-items', \App\Http\Controllers\Admin\TraderItemController::class);
     });
 });

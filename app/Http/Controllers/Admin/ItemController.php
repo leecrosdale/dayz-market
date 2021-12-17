@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Item;
+use App\Models\ItemType;
+use App\Models\Trader;
+use App\Models\TraderItem;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -49,9 +52,39 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeWithTrader(Request $request)
     {
-        //
+
+        $trader = Trader::find($request->trader_id);
+        $itemType = ItemType::find($request->item_type_id);
+        $className = $request->class_name;
+        $minPrice = $request->min_price;
+        $maxPrice = $request->max_price;
+        $minStock = $request->min_stock;
+        $maxStock = $request->max_stock;
+        $sellPricePercent = $request->sell_price_percent;
+
+
+        $item = Item::firstOrCreate([
+            'class_name' => $className,
+            'item_type_id' => $itemType->id,
+            'min_price_threshold' => $minPrice,
+            'max_price_threshold' => $maxPrice,
+            'min_stock_threshold' => $minStock,
+            'max_stock_threshold' => $maxStock,
+            'sell_price_percent' => $sellPricePercent,
+            'spawn_attachments' => [],
+            'variants' => []
+        ]);
+
+        TraderItem::firstOrCreate([
+            'trader_id' => $trader->id,
+            'item_id' => $item->id
+        ]);
+
+        $trader->removeMissingItem($item->class_name);
+
+        return redirect()->route('admin.traders.index', $trader)->with('status', 'Created ' . $item->class_name);
     }
 
     /**

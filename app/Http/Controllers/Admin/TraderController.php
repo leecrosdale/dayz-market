@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use App\Models\Trader;
+use App\Models\TraderItem;
 use Illuminate\Http\Request;
 
 class TraderController extends Controller
@@ -19,6 +21,32 @@ class TraderController extends Controller
 
         return view('admin.traders.index', compact('traders'));
     }
+
+    public function items(Trader $trader)
+    {
+        $items = $trader->trader_items()->with('item')->get();
+        return view('admin.traders.items.index', compact('trader', 'items'));
+    }
+
+    public function removeItem(Trader $trader, TraderItem $item)
+    {
+        $itemName = $item->item->class_name;
+        $trader->trader_items()->where('item_id', $item->id)->delete();
+        return redirect()->back()->with('status', 'Removed ' . $itemName);
+    }
+
+    public function missingItems(Trader $trader)
+    {
+        $missingItems = $trader->missing_items;
+
+        return view('admin.traders.items.missing.index', compact('missingItems', 'trader'));
+    }
+
+    public function showMissingItemCreate(Trader $trader, $missing)
+    {
+        return view('admin.traders.items.missing.create', compact('trader', 'missing'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

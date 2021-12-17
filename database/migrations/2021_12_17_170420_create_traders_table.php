@@ -20,6 +20,7 @@ class CreateTradersTable extends Migration
             $table->string('display_name');
             $table->string('icon');
             $table->string('filename');
+            $table->json('missing_items')->nullable();
             $table->timestamps();
         });
     }

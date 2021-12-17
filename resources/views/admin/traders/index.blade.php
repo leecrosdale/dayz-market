@@ -27,6 +27,7 @@
                                 <th>Icon</th>
                                 <th>Categories</th>
                                 <th>Items</th>
+                                <td>Missing Items</td>
                                 <th>View</th>
                             </tr>
                             </thead>
@@ -38,7 +39,8 @@
                                     <td>{{ $trader->display_name }}</td>
                                     <td>{{ $trader->icon }}</td>
                                     <td>{{ $trader->categories->implode('name', ', ') }}</td>
-                                    <td>{{ $trader->trader_items()->count() }}</td>
+                                    <td><a href="{{ route('admin.traders.items.index', $trader) }}">{{ $trader->trader_items()->count() }}</a></td>
+                                    <td><a href="{{ route('admin.traders.items.missing.index', $trader) }}">{{ count($trader->missing_items) ?? 0 }}</a></td>
                                     <td><a href="#">View</a></td>
                                 </tr>
                             @endforeach

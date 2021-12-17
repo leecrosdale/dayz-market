@@ -17,11 +17,11 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->foreignId('item_type_id')->constrained();
             $table->string('class_name');
-            $table->integer('max_price_threshold');
-            $table->integer('min_price_threshold');
-            $table->integer('sell_price_percent');
-            $table->integer('max_stock_threshold');
-            $table->integer('min_stock_threshold');
+            $table->integer('max_price_threshold')->default(0);
+            $table->integer('min_price_threshold')->default(0);
+            $table->integer('sell_price_percent')->default(-1);
+            $table->integer('max_stock_threshold')->default(1);
+            $table->integer('min_stock_threshold')->default(1);
             $table->json('spawn_attachments');
             $table->json('variants');
             $table->timestamps();

@@ -11,6 +11,14 @@ class Trader extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'missing_items' => 'array'
+    ];
+
+    public function getRouteKeyName()
+    {
+        return 'filename';
+    }
 
     public function currencies()
     {
@@ -72,6 +80,17 @@ class Trader extends Model
         return $data;
     }
 
+
+    public function removeMissingItem($name)
+    {
+        $missingItems = array_filter($this->missing_items, function($item) use ($name) {
+            return $item !== $name;
+        });
+
+        $this->missing_items = array_values($missingItems);
+
+        return $this->save();
+    }
 
 
 }

@@ -111,6 +111,16 @@ class ProcessTraders extends Command
 
         $this->comment("Unknown Items:");
 
+        foreach (Trader::all() as $trader)
+        {
+            if (isset($unknownItems[$trader->display_name])) {
+                $trader->missing_items = $unknownItems[$trader->display_name];
+            } else {
+                $trader->missing_items = [];
+            }
+            $trader->save();
+        }
+
         dd($unknownItems);
 
     }
