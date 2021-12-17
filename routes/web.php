@@ -16,3 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::middleware('auth:web')->group(function() {
+    Route::group(['prefix' => 'admin'], function() {
+        Route::resource('items', \App\Http\Controllers\ItemController::class);
+        Route::resource('traders', \App\Http\Controllers\TraderController::class);
+        Route::get('traders/{trader}/items', [\App\Http\Controllers\TraderController::class, 'items'])->name('trader.items');
+        Route::resource('trader-items', \App\Http\Controllers\TraderItemController::class);
+    });
+});

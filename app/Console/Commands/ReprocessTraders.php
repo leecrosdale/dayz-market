@@ -55,7 +55,6 @@ class ReprocessTraders extends Command
             ];
 
             Storage::put('reprocess/traders/' . $trader->filename, json_encode($content, JSON_PRETTY_PRINT));
-
         }
     }
 }
