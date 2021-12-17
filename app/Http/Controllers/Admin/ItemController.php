@@ -94,7 +94,7 @@ class ItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Item $item)
-    {
+    {#
         return view('admin.items.show', compact('item'));
     }
 

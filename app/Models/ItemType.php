@@ -20,7 +20,7 @@ class ItemType extends Model
     {
         $data = [];
 
-        foreach ($this->items as $item)
+        foreach ($this->items()->orderBy('class_name')->get() as $item)
         {
             $data[] = [
                 'ClassName' => $item->class_name,

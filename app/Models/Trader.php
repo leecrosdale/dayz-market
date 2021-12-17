@@ -59,7 +59,7 @@ class Trader extends Model
 
         $data = [];
 
-        foreach ($this->categories as $category)
+        foreach ($this->categories()->orderBy('name')->get() as $category)
         {
             $data[] = $category->name;
         }
@@ -72,7 +72,9 @@ class Trader extends Model
 
         $data = [];
 
-        foreach ($this->trader_items()->with('item')->get() as $item)
+        $traderItems = $this->trader_items()->with('item')->get();
+
+        foreach ($traderItems as $item)
         {
             $data[$item->item->class_name] = $item->status;
         }
