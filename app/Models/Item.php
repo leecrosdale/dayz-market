@@ -15,4 +15,9 @@ class Item extends Model
         'spawn_attachments' => 'object',
         'variants' => 'object'
     ];
+
+    public function item_type()
+    {
+        return $this->belongsTo(ItemType::class);
+    }
 }

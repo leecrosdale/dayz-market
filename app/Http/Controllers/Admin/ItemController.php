@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,21 @@ class ItemController extends Controller
     public function index()
     {
 
+
+        $search = request()->search;
+
+        if ($search)
+        {
+            $items = Item::where('class_name', 'LIKE', '%' . $search .'%');
+        } else {
+            $items = Item::query();
+        }
+
+
+        $items = $items->paginate(100);
+
+
+        return view('admin.items.index', compact('items'));
     }
 
     /**

@@ -23,8 +23,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::middleware('auth:web')->group(function() {
-    Route::group(['prefix' => 'admin'], function() {
-        Route::resource('items', \App\Http\Controllers\ItemController::class);
+    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
+        Route::resource('items', \App\Http\Controllers\Admin\ItemController::class);
         Route::resource('traders', \App\Http\Controllers\TraderController::class);
         Route::get('traders/{trader}/items', [\App\Http\Controllers\TraderController::class, 'items'])->name('trader.items');
         Route::resource('trader-items', \App\Http\Controllers\TraderItemController::class);
