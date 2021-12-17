@@ -28,6 +28,18 @@ class TraderController extends Controller
         return view('admin.traders.items.index', compact('trader', 'items'));
     }
 
+    public function addItem(Request $request, Trader $trader)
+    {
+        $item = Item::find($request->item_id);
+
+        TraderItem::create([
+            'item_id' => $item->id,
+            'trader_id' => $trader->id
+        ]);
+
+        return redirect()->back()->with('status', 'Added ' . $item->clas_name . ' to ' . $trader->display_name);
+    }
+
     public function removeItem(Trader $trader, TraderItem $item)
     {
         $itemName = $item->item->class_name;

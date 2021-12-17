@@ -27,6 +27,7 @@ Route::middleware('auth:web')->group(function() {
         Route::resource('items', \App\Http\Controllers\Admin\ItemController::class);
         Route::resource('traders', \App\Http\Controllers\Admin\TraderController::class);
         Route::get('traders/{trader}/items', [\App\Http\Controllers\Admin\TraderController::class, 'items'])->name('traders.items.index');
+        Route::post('traders/{trader}/items/add', [\App\Http\Controllers\Admin\TraderController::class, 'addItem'])->name('traders.items.add');
         Route::get('traders/{trader}/items/missing', [\App\Http\Controllers\Admin\TraderController::class, 'missingItems'])->name('traders.items.missing.index');
         Route::get('traders/{trader}/items/remove/{item}', [\App\Http\Controllers\Admin\TraderController::class, 'removeItem'])->name('traders.items.remove');
         Route::get('traders/{trader}/items/missing/convert/{missing}', [\App\Http\Controllers\Admin\TraderController::class, 'showMissingItemCreate'])->name('traders.items.missing.convert');

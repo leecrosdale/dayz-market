@@ -11,6 +11,19 @@
                         @include('shared.status')
 
 
+                        <form method="post" action="{{ route('admin.traders.items.add', $trader) }}">
+                            @csrf
+                            <select name="item_id" class="form-control">
+                                @foreach(\App\Models\Item::orderBy('class_name')->get() as $item)
+                                    <option value="{{ $item->id }}">{{ $item->class_name }}</option>
+                                @endforeach
+                            </select>
+                            <div class="py-3">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+
+
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -42,7 +55,8 @@
                                     <td>{{ $item->item->max_stock_threshold }}</td>
                                     <td>{{ count($item->item->spawn_attachments) ?? 0 }}</td>
                                     <td>{{ count($item->item->variants) ?? 0 }}</td>
-                                    <td><a href="{{ route('admin.traders.items.remove', [$trader, $item]) }}">Remove</a></td>
+                                    <td><a href="{{ route('admin.traders.items.remove', [$trader, $item]) }}">Remove</a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
