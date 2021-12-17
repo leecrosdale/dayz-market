@@ -47,20 +47,22 @@ class ProcessMarket extends Command
         {
             $items = json_decode(Storage::get($file));
 
-            $itemType = ItemType::firstOrCreate([
-                'm_version' => $items->m_Version,
+            $itemType = ItemType::updateOrCreate([
+                'filename' => Str::of($file)->basename(),
                 'name' => $items->DisplayName,
+            ], [
+                'm_version' => $items->m_Version,
                 'icon' => $items->Icon,
                 'color' => $items->Color,
                 'init_stock_percent' => $items->InitStockPercent,
-                'filename' => Str::of($file)->basename()
             ]);
 
 
             foreach ($items->Items as $item) {
-                Item::firstOrCreate([
+                Item::updateOrCreate([
                     'item_type_id' => $itemType->id,
                     'class_name' => $item->ClassName,
+                ], [
                     'max_price_threshold' => $item->MaxPriceThreshold,
                     'min_price_threshold' => $item->MinPriceThreshold,
                     'sell_price_percent' => $item->SellPricePercent,

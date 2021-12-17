@@ -77,12 +77,13 @@ class ProcessTraders extends Command
 
             $this->comment("Creating Trader: {$traders->DisplayName}");
 
-            $trader = Trader::firstOrCreate([
+            $trader = Trader::updateOrCreate([
+                'filename' => Str::of($file)->basename()
+            ], [
                 'm_version' => $traders->m_Version,
                 'display_name' => $traders->DisplayName,
                 'trader_name' => $traders->TraderName,
                 'icon' => $traders->TraderIcon,
-                'filename' => Str::of($file)->basename()
             ]);
 
             $trader->currencies()->sync($traderCurrencies);
@@ -97,9 +98,10 @@ class ProcessTraders extends Command
                     $unknownItems[$traders->DisplayName][] = $item;
                 } else {
 
-                    TraderItem::firstOrCreate([
+                    TraderItem::updateOrCreate([
                         'trader_id' => $trader->id,
                         'item_id' => $xItem->id,
+                    ], [
                         'status' => $status
                     ]);
                 }
