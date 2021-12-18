@@ -120,8 +120,5 @@ class ProcessTraders extends Command
             }
             $trader->save();
         }
-
-        dd($unknownItems);
-
     }
 }
