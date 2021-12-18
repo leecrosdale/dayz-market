@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Items') }}</div>
+                    <div class="card-header">{{ __('Items - Showing ' . $items->count() .' of ' . $items->total()) }}</div>
 
                     <div class="card-body table-responsive">
                         @include('shared.status')

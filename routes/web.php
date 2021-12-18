@@ -24,6 +24,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware('auth:web')->group(function() {
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
+
+        Route::get('/', function() {
+           return redirect()->route('admin.items.index');
+        });
+
         Route::resource('items', \App\Http\Controllers\Admin\ItemController::class);
         Route::resource('traders', \App\Http\Controllers\Admin\TraderController::class);
         Route::get('traders/{trader}/items', [\App\Http\Controllers\Admin\TraderController::class, 'items'])->name('traders.items.index');
