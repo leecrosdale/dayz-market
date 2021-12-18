@@ -14,6 +14,19 @@
                             <p>{{ $traderItem->trader->display_name }}</p>
                         @endforeach
 
+
+                    </div>
+
+                    <div class="card-header">{{ __('Item Variants') }}</div>
+
+                    <div class="card-body table-responsive">
+                        @include('shared.status')
+
+                        @foreach($item->variants as $variant)
+                            <p>{{ $variant }}</p>
+                        @endforeach
+
+
                     </div>
 
                 </div>

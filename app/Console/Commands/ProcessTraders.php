@@ -95,10 +95,20 @@ class ProcessTraders extends Command
                 $xItem = Item::where('class_name', $item)->first();
 
                 if (!$xItem) {
-                    $unknownItems[$traders->DisplayName][] = $item;
-                } else {
 
+                    // Check item is not a variant
+
+                    $variant = Item::whereJsonContains('variants', $item)->first();
+
+                    if (!$variant) {
+                        $unknownItems[$traders->DisplayName][] = $item;
+                    } else {
+                        $this->comment("Variant Found: " . $item);
+                    }
+
+                } else {
                     TraderItem::updateOrCreate([
+                        'class_name' => $xItem->class_name,
                         'trader_id' => $trader->id,
                         'item_id' => $xItem->id,
                     ], [

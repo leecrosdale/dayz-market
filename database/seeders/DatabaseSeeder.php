@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(10)->create();
 
-        Artisan::call('dayz:get-files');
+//        Artisan::call('dayz:get-files');
         Artisan::call('process:market');
         Artisan::call('process:traders');
 

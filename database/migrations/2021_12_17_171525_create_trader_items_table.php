@@ -15,6 +15,7 @@ class CreateTraderItemsTable extends Migration
     {
         Schema::create('trader_items', function (Blueprint $table) {
             $table->id();
+            $table->string('class_name');
             $table->foreignId('trader_id')->constrained();
             $table->foreignId('item_id')->constrained();
             $table->unsignedTinyInteger('status')->default(0);

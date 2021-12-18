@@ -72,7 +72,7 @@ class Trader extends Model
 
         $data = [];
 
-        $traderItems = $this->trader_items()->with('item')->get();
+        $traderItems = $this->trader_items()->orderBy('class_name')->with('item')->get();
 
         foreach ($traderItems as $item)
         {
