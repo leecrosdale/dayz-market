@@ -41,6 +41,8 @@ class GetFilesFromServer extends Command
     {
         $marketFiles = Storage::disk('ftp')->files('dayzstandalone/config/ExpansionMod/Market');
         $tradersFiles = Storage::disk('ftp')->files('dayzstandalone/config/ExpansionMod/Traders');
+        $traderObjectMapFiles = Storage::disk('ftp')->files('dayzstandalone/mpmissions/regular.namalsk/expansion/objects');
+        $traderMapFiles = Storage::disk('ftp')->files('dayzstandalone/mpmissions/regular.namalsk/expansion/traders');
 
         foreach($marketFiles as $marketFile) {
             $filename = Str::of($marketFile)->basename();
@@ -54,6 +56,20 @@ class GetFilesFromServer extends Command
             $contents = Storage::disk('ftp')->get($tradersFile);
             $this->comment("Storing: " . $filename);
             Storage::disk('local')->put("traders/{$filename}", $contents);
+        }
+
+        foreach($traderMapFiles as $traderMapFile) {
+            $filename = Str::of($traderMapFile)->basename();
+            $contents = Storage::disk('ftp')->get($traderMapFile);
+            $this->comment("Storing: " . $filename);
+            Storage::disk('local')->put("trader-maps/{$filename}", $contents);
+        }
+
+        foreach($traderObjectMapFiles as $traderObjectMapFile) {
+            $filename = Str::of($traderObjectMapFile)->basename();
+            $contents = Storage::disk('ftp')->get($traderObjectMapFile);
+            $this->comment("Storing: " . $filename);
+            Storage::disk('local')->put("trader-objects/{$filename}", $contents);
         }
     }
 }
