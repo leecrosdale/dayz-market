@@ -27,7 +27,7 @@
                                 <th>Icon</th>
                                 <th>Categories</th>
                                 <th>Items</th>
-                                <td>Missing Items</td>
+                                <th>Missing Items</th>
                                 <th>View</th>
                             </tr>
                             </thead>
